@@ -15,7 +15,7 @@ module.exports = {
         const hash = bcrypt.hashSync(password, salt);
         const registeredUser = await db.register_user([isAdmin, username, hash]);
         const user = registeredUser[0];
-        req.session.user = {isAdmin: user.isAdmin, username: user.username, id: user.id};
+        req.session.user = {isAdmin: user.is_admin, username: user.username, id: user.id};
         return res.status(201).send(req.session.user);
     },
     login: async (req, res) => {
@@ -31,7 +31,7 @@ module.exports = {
         if (!isAuthenticated) {
             return res.status(403).send('Incorrect password');
         }
-        req.session.user = {isAdmin: user.isAdmin, username: user.username, id: user.id};
+        req.session.user = {isAdmin: user.is_admin, username: user.username, id: user.id};
         return res.status(200).send(req.session.user);
     },
     logout: async (req, res) => {
